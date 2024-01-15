@@ -234,6 +234,9 @@
             "./assets/controllers/hello_controller.js"
         ]
     },
+    "symfony/swiftmailer-bundle": {
+        "version": "v2.3.8"
+    },
     "symfony/translation": {
         "version": "7.0",
         "recipe": {
