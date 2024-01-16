@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: ShelfRepository::class)]
 class Shelf
 {

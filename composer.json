@@ -38,7 +38,6 @@
         "symfony/serializer": "7.0.*",
         "symfony/stimulus-bundle": "^2.13",
         "symfony/string": "7.0.*",
-        "symfony/swiftmailer-bundle": "*",
         "symfony/translation": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
         "symfony/ux-turbo": "^2.13",
