@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+{% block styles %}
+<style>
+    .products-container {
+        height: 100%;
+        margin-top: 100px;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container products-container">
+    {% include 'bearcrumb.html.twig' with {'title': 'Tous nos produits'} %}
+    <div class="row justify-content-between">
+        {% for product in products %}
+            {% include 'product-card.html.twig' with {'product': product } %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
