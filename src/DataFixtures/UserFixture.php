@@ -37,7 +37,7 @@ class UserFixture extends Fixture implements FixtureGroupInterface
             $user->setPostalCode($faker->postcode);
             $user->setCity($faker->city);
             $user->setEmail($faker->email);
-            $user->setPassword($this->passwordHasher->hashPassword($user, "user.$i"));
+            $user->setPassword($this->passwordHasher->hashPassword($user, "user"));
             $user->setRoles(['ROLE_USER']);
             $manager->persist($user);
         }

@@ -28,6 +28,7 @@
         "symfony/http-client": "7.0.*",
         "symfony/intl": "7.0.*",
         "symfony/mailer": "7.0.*",
+        "symfony/mailgun-mailer": "7.0.*",
         "symfony/mime": "7.0.*",
         "symfony/monolog-bundle": "^3.0",
         "symfony/notifier": "7.0.*",
@@ -46,6 +47,8 @@
         "symfony/web-link": "7.0.*",
         "symfony/yaml": "7.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/intl-extra": "^3.8",
+        "twig/string-extra": "^3.8",
         "twig/twig": "^2.12|^3.0"
     },
     "config": {

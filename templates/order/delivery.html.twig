@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+{% block styles %}
+<style>
+    .delivery-container {
+        height: 100%;
+        margin-top: 100px;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container delivery-container">
+    {% include 'bearcrumb.html.twig' with {'title': 'Livraison'} %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Prix</th>
+                        <th>Quantité</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for element in products %}
+                        <tr>
+                            <td>{{ element.product.name }}</td>
+                            <td>{{ element.product.price | format_currency('EUR', locale='fr') }} </td>
+                            <td>{{ element.quantity }}</td>
+                            <td>{{ (element.quantity * element.product.price) | format_currency('EUR', locale='fr') }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Votre panier est vide</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3">Total</td>
+                        <td>{{ total | format_currency('EUR', locale='fr') }} </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <form action="{{ path('app_order_confirm') }}" method="POST">
+            <div class="my-5">
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="delivery" value=false id="flexRadioDefault1" checked>
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        A emporter à notre boutique
+                    </label>
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="radio" name="delivery" value=true id="flexRadioDefault2">
+                    <label class="form-check-label" for="flexRadioDefault2">
+                        Livraison à votre domicile : {{ app.user.address}} {{ app.user.postalCode }} {{ app.user.city }}
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-outline-success" type="submit">Confirmer la commande</button>
+            <form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -38,6 +38,9 @@ class Order
     #[ORM\OneToMany(mappedBy: 'order_related', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
 
+    #[ORM\Column]
+    private ?float $total = null;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -122,6 +125,18 @@ class Order
                 $orderDetail->setOrderRelated(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): static
+    {
+        $this->total = $total;
 
         return $this;
     }
