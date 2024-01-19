@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Model\SearchData;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -68,4 +69,23 @@ class ProductRepository extends ServiceEntityRepository
            ->getArrayResult()
        ;
    }
+
+   public function findProductsByNameSearch(SearchData $searchData)
+    {
+        $data = $this->createQueryBuilder('p')
+            ->addOrderBy('p.createdAt', 'DESC');
+
+        if (!empty($searchData->q)) {
+            $data = $data
+                ->andWhere('p.name LIKE :q')
+                ->setParameter('q', "%{$searchData->q}%");
+        }
+
+        $data = $data
+            ->getQuery()
+            ->getResult();
+
+        return $data;
+    }
+
 }

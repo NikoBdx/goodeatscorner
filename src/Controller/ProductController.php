@@ -12,7 +12,8 @@ use App\Repository\ProductRepository;
 use App\Repository\ShelfRepository;
 use App\Repository\FamilyRepository;
 use Symfony\Component\HttpFoundation\Request;
-
+use App\Form\SearchType;
+use App\Model\SearchData;
 
 
 class ProductController extends AbstractController
@@ -27,9 +28,16 @@ class ProductController extends AbstractController
         $this->repository = $this->managerRegistry->getRepository(Product::class);
     }
 
-    #[Route('/product', name: 'app_product')]
-    public function index(SessionInterface $session): Response
+    #[Route('/product', name: 'app_product', methods: ['GET'])]
+    public function index(
+        SessionInterface $session,
+        ProductRepository $productRepository,
+        Request $request,
+    ): Response
+
     {
+        $routeName = $request->attributes->get('_route');
+
         $products = $this->repository->findAll();
 
         $cart = $session->get('cart', []);
@@ -46,18 +54,95 @@ class ProductController extends AbstractController
             $total += $product->getPrice() * $quantity;
         }
 
+        $searchData = new SearchData();
+        $form = $this->createForm(SearchType::class, $searchData);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $products = $productRepository->findProductsByNameSearch($searchData);
+
+            return $this->render('product/index.html.twig', [
+                'form' => $form->createView(),
+                'products' => $products,
+                'cartProducts' => $cartProducts,
+                'routeName' => $routeName,
+                'routeParameters' => "cart",
+                'title' => "Résultat de votre recherche",
+            ]);
+        }
+
         return $this->render('product/index.html.twig', [
-            'products' => $products,
+            'form' => $form->createView(),
+            'products' => $this->repository->findAll(),
             'cartProducts' => $cartProducts,
+            'routeName' => $routeName,
+            'routeParameters' => "cart",
+            'title' => "Dernier arrivage en stock",
         ]);
     }
+    // #[Route('/', name: 'post.index', methods: ['GET'])]
+    // public function index(
+    //     PostRepository $postRepository,
+    //     Request $request
+    // ): Response {
+    //     $searchData = new SearchData();
+    //     $form = $this->createForm(SearchType::class, $searchData);
+
+    //     $form->handleRequest($request);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $searchData->page = $request->query->getInt('page', 1);
+    //         $posts = $postRepository->findBySearch($searchData);
+
+    //         return $this->render('pages/post/index.html.twig', [
+    //             'form' => $form->createView(),
+    //             'posts' => $posts
+    //         ]);
+    //     }
+
+    //     return $this->render('pages/post/index.html.twig', [
+    //         'form' => $form->createView(),
+    //         'posts' => $postRepository->findPublished($request->query->getInt('page', 1))
+    //     ]);
+    // }
+
+
+    // #[Route('/product', name: 'app_product')]
+    // public function index(SessionInterface $session): Response
+    // {
+    //     $products = $this->repository->findAll();
+
+    //     $cart = $session->get('cart', []);
+
+    //     $cartProducts = [];
+    //     $total = 0;
+
+    //     foreach($cart as $id => $quantity) {
+    //         $product = $this->repository->find($id);
+    //         $cartProducts[] = [
+    //             'product' => $product,
+    //             'quantity' => $quantity
+    //         ];
+    //         $total += $product->getPrice() * $quantity;
+    //     }
+
+    //     return $this->render('product/index.html.twig', [
+    //         'products' => $products,
+    //         'cartProducts' => $cartProducts,
+    //     ]);
+    // }
 
 
     #[Route('/product/family/{family}', name: 'app_product_family')]
-    public function getProductsByFamily(Request $request, SessionInterface $session, ProductRepository $productRepository, FamilyRepository $familyRepository, $family): Response
+    public function getProductsByFamily(
+        Request $request,
+        SessionInterface $session,
+        ProductRepository $productRepository,
+        FamilyRepository $familyRepository,
+        $family
+    ): Response
+
     {
-        $routeParameters = $request->attributes->get('_route_params');
         $routeName = $request->attributes->get('_route');
+        $routeParameters = $request->attributes->get('_route_params');
 
         foreach ($routeParameters as $cle => $valeur) {
             $params = "$cle-$valeur";
