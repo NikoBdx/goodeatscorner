@@ -8,14 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Request;
+
 
 
 #[Route('/cart')]
 class CartController extends AbstractController
 {
-    #[Route('/', name: 'app_cart')]
-    public function index(SessionInterface $session, ProductRepository $productsRepository)
+    #[Route('', name: 'app_cart')]
+    public function index(Request $request, SessionInterface $session, ProductRepository $productsRepository)
     {
+        $routeName = $request->attributes->get('_route');
+
         $cart = $session->get('cart', []);
 
         $products = [];
@@ -33,6 +37,7 @@ class CartController extends AbstractController
         return $this->render('cart/index.html.twig', [
             'products' => $products,
             'total' => $total,
+            'routeName' => $routeName
         ]);
     }
 
@@ -53,8 +58,8 @@ class CartController extends AbstractController
     }
 
 
-    #[Route('/add/{id}/{from}', name: 'app_cart_add')]
-    public function add(Product $product, $from, SessionInterface $session)
+    #[Route('/add/{id}/{routeName}/{routeParameters}', name: 'app_cart_add')]
+    public function add(Product $product, SessionInterface $session, $routeName, $routeParameters )
     {
         $id = $product->getId();
 
@@ -68,18 +73,19 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-        //si la route est appellé depuis la page cart on reste sur cette page
-        if ($from === "cart") {
-            return $this->redirectToRoute('app_cart');
+        if ($routeParameters === "cart") {
+            $params = [];
+        } else {
+            $elements = explode('-', trim($routeParameters));
+            $params = [$elements[0] => $elements[1]];
         }
-        //si la route est appellé depuis la page des produits on reste sur cete page
-        if ($from === "products") {
-            return $this->redirectToRoute('app_product');
-        }
+
+        return $this->redirectToRoute($routeName, $params);
+
     }
 
-    #[Route('/remove/{id}/{from}', name: 'app_cart_remove')]
-    public function remove(Product $product, $from, SessionInterface $session)
+    #[Route('/remove/{id}/{routeName}/{routeParameters}', name: 'app_cart_remove')]
+    public function remove(Product $product, SessionInterface $session, $routeName, $routeParameters)
     {
         $id = $product->getId();
 
@@ -95,14 +101,15 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-        //si la route est appellé depuis la page cart on reste sur cette page
-        if ($from === "cart") {
-            return $this->redirectToRoute('app_cart');
+
+        if ($routeParameters === "cart") {
+            $params = [];
+        } else {
+            $elements = explode('-', trim($routeParameters));
+            $params = [$elements[0] => $elements[1]];
         }
-        //si la route est appellé depuis la page des produits on reste sur cete page
-        if ($from === "products") {
-            return $this->redirectToRoute('app_product');
-        }
+
+        return $this->redirectToRoute($routeName, $params);
     }
 
     #[Route('/delete/{id}', name: 'app_cart_delete')]

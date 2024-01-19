@@ -5,7 +5,7 @@
     <p class="card-text">{{ product.description | u.truncate(50, '...') }}</p>
     <div class="row justify-content-between align-items-center">
         <div class="col text-center">
-            <a href="{{ path('app_cart_add', {id: product.id, from: "products"}) }}"><i class="bi bi-plus-square" style="font-size: 2rem;"></i></a>
+            <a href="{{ path('app_cart_add', {id: product.id, routeName: routeName, routeParameters:routeParameters }) }}"><i class="bi bi-plus-square" style="font-size: 2rem;"></i></a>
         </div>
         <div class="col text-center">
         {% set incart = false %}
@@ -20,7 +20,7 @@
         {% endif %}
         </div>
         <div class="col text-center">
-        <a href="{{ path('app_cart_remove', {id: product.id, from: ""}) }}"><i class="bi bi-dash-square" style="font-size: 2rem;"></i></a>
+        <a href="{{ path('app_cart_remove', {id: product.id, routeName: routeName, routeParameters:routeParameters}) }}"><i class="bi bi-dash-square" style="font-size: 2rem;"></i></a>
         </div>
     </div>
   </div>

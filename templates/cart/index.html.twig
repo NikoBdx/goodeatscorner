@@ -33,9 +33,15 @@
                             <td>{{ element.quantity }}</td>
                             <td>{{ (element.quantity * element.product.price) | format_currency('EUR', locale='fr') }}</td>
                             <td>
-                                <a href="{{ path('app_cart_add', {id: element.product.id, from: "cart"}) }}" class="btn btn-outline-success">+</a>
-                                <a href="{{ path('app_cart_remove', {id: element.product.id, from: "cart"}) }}" class="btn btn-outline-warning">-</a>
-                                <a href="{{ path('app_cart_delete', {id: element.product.id}) }}" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                <a href="{{ path('app_cart_add', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
+                                    <i class="bi bi-plus-square" style="font-size: 2rem;"></i>
+                                </a>
+                                <a href="{{ path('app_cart_remove', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
+                                    <i class="bi bi-dash-square" style="font-size: 2rem;"></i>
+                                </a>
+                                <a href="{{ path('app_cart_delete', {id: element.product.id}) }}">
+                                    <i class="bi bi-trash" style="font-size: 2rem;"></i>
+                                </a>
                             </td>
                         </tr>
                     {% else %}
