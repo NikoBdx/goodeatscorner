@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block styles %}
+<style>
+    .user-order-details-container {
+        height: 100%;
+        margin-top: 100px;
+        margin-bottom: 100px
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container user-order-details-container">
+    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Détails de la commande: {{ number }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Produit</th>
+                        <th>Quantité</th>
+                        <th>Prix unitaire</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for detail in details %}
+                        <tr>
+                            <td>{{ detail.product.name }}</td>
+                            <td>{{ detail.quantity }} </td>
+                            <td>{{ detail.unit_price | format_currency('EUR', locale='fr') }}</td>
+                            <td>{{ (detail.unit_price * detail.quantity) | format_currency('EUR', locale='fr') }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

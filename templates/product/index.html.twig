@@ -9,7 +9,7 @@
 {% endblock %}
 {% block body %}
 <div class="container products-container">
-    {% include 'bearcrumb.html.twig' with {'title': 'Tous nos produits'} %}
+    {% include 'bearcrumb.html.twig' with {'title': title} %}
     <div class="row justify-content-between">
         {% for product in products %}
             {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}

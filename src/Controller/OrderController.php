@@ -5,12 +5,17 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Order;
 use App\Entity\OrderDetail;
+use App\Repository\OrderDetailRepository;
+use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
+
+
+
 
 #[Route('/order')]
 class OrderController extends AbstractController
@@ -26,11 +31,11 @@ class OrderController extends AbstractController
     #[Route('/delivery', name: 'app_order_delivery')]
     public function delivery(SessionInterface $session, ProductRepository $productsRepository): Response
     {
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
         $products = [];
         $total = 0;
 
-        foreach($panier as $id => $quantity) {
+        foreach($cart as $id => $quantity) {
             $product = $productsRepository->find($id);
             $products[] = [
                 'product' => $product,
@@ -48,13 +53,13 @@ class OrderController extends AbstractController
     #[Route('/confirm', name: 'app_order_confirm')]
     public function confirm(SessionInterface $session, ProductRepository $productsRepository, Request $request): Response
     {
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
         $products = [];
         $total = 0;
 
         $user = $this->getUser();
 
-        foreach($panier as $id => $quantity) {
+        foreach($cart as $id => $quantity) {
             $product = $productsRepository->find($id);
             $products[] = [
                 'product' => $product,
@@ -86,30 +91,45 @@ class OrderController extends AbstractController
             }
             $this->entityManager->persist($order);
             $this->entityManager->flush();
+
+            //on vide le panier
+            $session->remove('cart');
+
         }
 
-        return $this->render('home/index.html.twig');
+        return $this->render('layout.html.twig');
     }
 
     #[Route('/user', name: 'app_order_user')]
-    public function showOrdersByUser(SessionInterface $session, ProductRepository $productsRepository): Response
+    public function showOrdersByUser(OrderRepository $orderRepository): Response
     {
-        $panier = $session->get('panier', []);
-        $products = [];
-        $total = 0;
+        $user = $this->getUser();
+        $orders = $orderRepository->findOrdersByUser($user);
 
-        foreach($panier as $id => $quantity) {
-            $product = $productsRepository->find($id);
-            $products[] = [
-                'product' => $product,
-                'quantity' => $quantity
-            ];
-            $total += $product->getPrice() * $quantity;
-        }
+        // $results = [];
+        // foreach ( $orders as $order) {
+        //     $results[] = [
+        //         "order" => $order,
+        //         "details" => $orderDetailRepository->findDetailsByOrder($order)
+        //     ];
+        // }
 
-        return $this->render('order/delivery.html.twig', [
-            'products' => $products,
-            'total' => $total,
+        // dd($orders);
+
+        return $this->render('order/user_orders.html.twig', [
+            "orders" => $orders
+        ]);
+    }
+
+    #[Route('/user/details/{order}/{number}', name: 'app_order_user_detail')]
+    public function showOrderDetails(OrderDetailRepository $orderDetailRepository, ProductRepository $productsRepository,$order, $number): Response
+    {
+
+        $details = $orderDetailRepository->findDetailsByOrder($order);
+
+        return $this->render('order/user_order_details.html.twig', [
+            "details" => $details,
+            "number" => $number
         ]);
     }
 }

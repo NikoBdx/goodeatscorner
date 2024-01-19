@@ -36,13 +36,36 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneBySomeField($value): ?Product
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.exampleField = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
+
+   public function findProductsByFamily($value)
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.family = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getArrayResult()
+       ;
+   }
+
+   public function findProductsByShelf($value)
+   {
+       return $this->createQueryBuilder('p')
+           ->select('p','f', 's')
+           ->join('p.family', 'f')
+           ->join('f.shelf', 's')
+           ->andWhere('s.id = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getArrayResult()
+       ;
+   }
 }

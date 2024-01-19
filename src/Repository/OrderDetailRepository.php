@@ -36,13 +36,44 @@ class OrderDetailRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?OrderDetail
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneBySomeField($value): ?OrderDetail
+   {
+       return $this->createQueryBuilder('od')
+           ->andWhere('od.exampleField = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
+
+   public function findOrdersByUser($user)
+   {
+        return  $this->createQueryBuilder('od')
+        ->select('o', 'od')
+        ->join('od.order_related', 'o')
+        ->andWhere('o.user = :val')
+        ->setParameter('val', $user)
+        ->getQuery()
+        ->getResult();
+
+    //     $this->createQueryBuilder('pr')
+    // ->select('partial pk.{id, name}, partial pr.{id, label}')
+    // ->join('pr.package', 'pk')
+    // ->getQuery()
+    // ->getArrayResult()
+
+   }
+
+   public function findDetailsByOrder($order)
+   {
+        return $this->createQueryBuilder('od')
+            ->select('p', 'od')
+            ->join('od.order_related', 'o')
+            ->join('od.product', 'p')
+            ->andWhere('o.id = :val')
+            ->setParameter('val', $order)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
 }

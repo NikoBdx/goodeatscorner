@@ -1,0 +1,29 @@
+{# Menu généré en fonction des rayons et des familles de produits #}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuSupportedContent" aria-controls="menuSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% for shelf in shelfs %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {{loop.first ? "active" : "" }}" href="{{ path('app_product_shelf', {shelf : shelf.id}) }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ shelf.name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for family in shelf.families %}
+                        <li><a class="nav-link dropdown-item" href="{{ path('app_product_family', {family : family.id}) }}">{{ family.name }}</a></li>
+                            {% if not loop.last %}
+                                <li><hr class="dropdown-divider"></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="nav-link dropdown-item" href="{{ path('app_product_shelf', {shelf : shelf.id}) }}">Tous les produits</a></li>
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

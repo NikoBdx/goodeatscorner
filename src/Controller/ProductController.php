@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Product;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use App\Repository\ProductRepository;
+use App\Repository\ShelfRepository;
+
 
 class ProductController extends AbstractController
 {
@@ -26,12 +29,12 @@ class ProductController extends AbstractController
     {
         $products = $this->repository->findAll();
 
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
         $cartProducts = [];
         $total = 0;
 
-        foreach($panier as $id => $quantity) {
+        foreach($cart as $id => $quantity) {
             $product = $this->repository->find($id);
             $cartProducts[] = [
                 'product' => $product,
@@ -40,11 +43,63 @@ class ProductController extends AbstractController
             $total += $product->getPrice() * $quantity;
         }
 
-        dump($cartProducts);
+        return $this->render('product/index.html.twig', [
+            'products' => $products,
+            'cartProducts' => $cartProducts
+        ]);
+    }
+
+
+    #[Route('/product/family/{family}', name: 'app_product_family')]
+    public function getProductsByFamily(SessionInterface $session, ProductRepository $productRepository, $family): Response
+    {
+        $products = $productRepository->findProductsByFamily($family);
+
+        $cart = $session->get('cart', []);
+
+        $cartProducts = [];
+        $total = 0;
+
+        foreach($cart as $id => $quantity) {
+            $product = $this->repository->find($id);
+            $cartProducts[] = [
+                'product' => $product,
+                'quantity' => $quantity
+            ];
+            $total += $product->getPrice() * $quantity;
+        }
 
         return $this->render('product/index.html.twig', [
             'products' => $products,
             'cartProducts' => $cartProducts
+        ]);
+    }
+
+    #[Route('/product/shelf/{shelf}', name: 'app_product_shelf')]
+    public function getProductsByShelf(SessionInterface $session, ProductRepository $productRepository, ShelfRepository $shelfRepository, $shelf): Response
+    {
+        $products = $productRepository->findProductsByShelf($shelf);
+
+        $shelfName = $shelfRepository->find($shelf)->getName();
+
+        $cart = $session->get('cart', []);
+
+        $cartProducts = [];
+        $total = 0;
+
+        foreach($cart as $id => $quantity) {
+            $product = $this->repository->find($id);
+            $cartProducts[] = [
+                'product' => $product,
+                'quantity' => $quantity
+            ];
+            $total += $product->getPrice() * $quantity;
+        }
+
+        return $this->render('product/index.html.twig', [
+            'products' => $products,
+            'cartProducts' => $cartProducts,
+            'title' => $shelfName
         ]);
     }
 }

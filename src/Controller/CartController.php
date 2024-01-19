@@ -16,12 +16,12 @@ class CartController extends AbstractController
     #[Route('/', name: 'app_cart')]
     public function index(SessionInterface $session, ProductRepository $productsRepository)
     {
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
         $products = [];
         $total = 0;
 
-        foreach($panier as $id => $quantity) {
+        foreach($cart as $id => $quantity) {
             $product = $productsRepository->find($id);
             $products[] = [
                 'product' => $product,
@@ -43,12 +43,12 @@ class CartController extends AbstractController
 
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
-        if(empty($panier[$id])){
+        if(empty($cart[$id])){
             return $quantity;
         }else{
-            return $panier[$id];
+            return $cart[$id];
         }
     }
 
@@ -58,19 +58,17 @@ class CartController extends AbstractController
     {
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
-        if(empty($panier[$id])){
-            $panier[$id] = 1;
+        if(empty($cart[$id])){
+            $cart[$id] = 1;
         }else{
-            $panier[$id]++;
+            $cart[$id]++;
         }
 
-        $session->set('panier', $panier);
+        $session->set('cart', $cart);
 
-        dump($panier);
-
-        //si la route est appellé depuis la page panier on reste sur cette page
+        //si la route est appellé depuis la page cart on reste sur cette page
         if ($from === "cart") {
             return $this->redirectToRoute('app_cart');
         }
@@ -85,19 +83,19 @@ class CartController extends AbstractController
     {
         $id = $product->getId();
 
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
-        if(!empty($panier[$id])){
-            if($panier[$id] > 1){
-                $panier[$id]--;
+        if(!empty($cart[$id])){
+            if($cart[$id] > 1){
+                $cart[$id]--;
             }else{
-                unset($panier[$id]);
+                unset($cart[$id]);
             }
         }
 
-        $session->set('panier', $panier);
+        $session->set('cart', $cart);
 
-        //si la route est appellé depuis la page panier on reste sur cette page
+        //si la route est appellé depuis la page cart on reste sur cette page
         if ($from === "cart") {
             return $this->redirectToRoute('app_cart');
         }
@@ -111,13 +109,13 @@ class CartController extends AbstractController
     public function delete(Product $product, SessionInterface $session)
     {
         $id = $product->getId();
-        $panier = $session->get('panier', []);
+        $cart = $session->get('cart', []);
 
-        if(!empty($panier[$id])){
-            unset($panier[$id]);
+        if(!empty($cart[$id])){
+            unset($cart[$id]);
         }
 
-        $session->set('panier', $panier);
+        $session->set('cart', $cart);
 
         return $this->redirectToRoute('app_cart');
     }
@@ -125,7 +123,7 @@ class CartController extends AbstractController
     #[Route('/empty', name: 'app_cart_empty')]
     public function empty(SessionInterface $session)
     {
-        $session->remove('panier');
+        $session->remove('cart');
 
         return $this->redirectToRoute('app_cart');
     }

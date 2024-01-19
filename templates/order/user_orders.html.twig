@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+
+{% block styles %}
+<style>
+    .user-order-container {
+        height: 100%;
+        margin-top: 100px;
+        margin-bottom: 100px
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container user-order-container">
+    {% include 'bearcrumb.html.twig' with {'title': 'Mes Commandes'} %}
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Numéro</th>
+                        <th>Montant</th>
+                        <th>Livraison</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                        <tr>
+                            <td>{{ order.createdAt | date("d/m/Y") }}</td>
+                            <td>{{ order.number }} </td>
+                            <td>{{ order.total | format_currency('EUR', locale='fr') }}</td>
+                            <td>{{ order.delivery ? "Livrée" : "Emportée"}}</td>
+                            <td>
+                                <a href="{{ path('app_order_user_detail', {order : order.id, number: order.number}) }}" class="btn btn-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5">Vous n'avez pas de commandes !</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

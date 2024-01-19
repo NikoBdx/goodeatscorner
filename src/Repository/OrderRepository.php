@@ -36,13 +36,25 @@ class OrderRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Order
-//    {
-//        return $this->createQueryBuilder('o')
-//            ->andWhere('o.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
+   public function findOrdersByUser($user)
+   {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.user = :val')
+            ->setParameter('val', $user)
+            ->getQuery()
+            ->getResult();
+       ;
+    }
+//         $ordersWithDetails =[];
+//         foreach ($orders as $order) {
+//             $query =
+//                 $this->createQueryBuilder('od')
+//                 ->from('order_detail', 'od')
+//                 ->andWhere('od.order = :val')
+//                 ->setParameter('val', $user)
+//                 ->getQuery()
+//                 ->getResult()
+//             ;
+//        }
 //    }
 }
