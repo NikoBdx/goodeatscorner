@@ -37,15 +37,15 @@ class ProductRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-   public function findOneBySomeField($value): ?Product
-   {
-       return $this->createQueryBuilder('p')
-           ->andWhere('p.exampleField = :val')
-           ->setParameter('val', $value)
-           ->getQuery()
-           ->getOneOrNullResult()
-       ;
-   }
+//    public function findOneBySomeField($value): ?Product
+//    {
+//        return $this->createQueryBuilder('p')
+//            ->andWhere('p.exampleField = :val')
+//            ->setParameter('val', $value)
+//            ->getQuery()
+//            ->getOneOrNullResult()
+//        ;
+//    }
 
    public function findProductsByFamily($value)
    {
@@ -86,6 +86,26 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
 
         return $data;
+    }
+
+    public function findLastProducts($number)
+    {
+        return $this->createQueryBuilder('p')
+            ->addOrderBy('p.updatedAt', 'DESC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findLessExpensiveProducts($number)
+    {
+        return $this->createQueryBuilder('p')
+            ->addOrderBy('p.price', 'ASC')
+            ->setMaxResults($number)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 }

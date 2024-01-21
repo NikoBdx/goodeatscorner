@@ -27,34 +27,46 @@
         <div class="container-fluid">
             <a class="navbar-brand" href="/">Good Eats Corner</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_product') }}">Accueil</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            {% if app.user %}
-                <strong><li class="nav-link">Bonjour {{ app.user.firstname  }}</li></strong>
-                <a class="nav-link" href="{{ path('app_order_user') }}">Mes commandes</a>
-            {% endif %}
-            {% if is_granted('ROLE_ADMIN') %}
-                <a class="nav-link" href="{{ path('app_admin')}}"><i class="bi bi-person-lock"></i>Administration</a>
-            {% endif %}
-            {% if not app.user %}
-                <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
-            {% endif %}
-            {% if app.user %}
-                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-            {% endif %}
-            {% if not app.user %}
-                <a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
-            {% endif %}
-            <a class="nav-link" href="{{ path('app_cart') }}"><i class="bi bi-cart4"></i></a>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_product') }}">Accueil</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if app.user %}
+                    <strong><li class="nav-link">Bonjour {{ app.user.firstname  }}</li></strong>
+                    <a class="nav-link" href="{{ path('app_order_user') }}">Mes commandes</a>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a class="nav-link" href="{{ path('app_admin')}}"><i class="bi bi-person-lock"></i>Administration</a>
+                {% endif %}
+                {% if not app.user %}
+                    <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                {% endif %}
+                {% if app.user %}
+                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                {% endif %}
+                {% if not app.user %}
+                    <a class="nav-link" href="{{ path('app_register') }}">S'inscrire</a>
+                {% endif %}
+
+                {% if app.session.get("cart") %}
+                    <a class="nav-link" href="{{ path('app_cart') }}">
+                        <i class="bi bi-cart4 position-relative">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ app.session.get("cart") | getTotal }}</span>
+                        </i>
+                    </a>
+                {% endif %}
+                {% if not app.session.get("cart") %}
+                    <a class="nav-link" href="{{ path('app_cart') }}">
+                        <i class="bi bi-cart4"></i>
+                    </a>
+                {% endif %}
+                </ul>
             </div>
-            </ul>
         </div>
     </nav>
 

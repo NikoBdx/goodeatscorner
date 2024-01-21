@@ -8,6 +8,8 @@
 </style>
 {% endblock %}
 {% block body %}
+
+{% if products is defined %}
 <div class="container products-container">
     {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
     {% include 'bearcrumb.html.twig' with {'title': title ? title : "Votre recherche" } %}
@@ -17,4 +19,26 @@
         {% endfor %}
     </div>
 </div>
+{% endif %}
+{% if lastProducts is defined %}
+<div class="container products-container">
+    {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
+    <h3 class="mt-5">Derniers produits arrivés en stock !</h3>
+    <div class="row justify-content-between">
+        {% for product in lastProducts %}
+            {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% if lessExpensiveProducts is defined %}
+<div class="container my-5">
+    <h3>Nos premiers prix</h3>
+    <div class="row justify-content-between">
+        {% for product in lessExpensiveProducts %}
+            {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}

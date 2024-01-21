@@ -36,6 +36,10 @@ class ProductController extends AbstractController
     ): Response
 
     {
+        $lastProducts = $productRepository->findLastProducts(4);
+
+        $lessExpensiveProducts = $productRepository->findLessExpensiveProducts(4);
+
         $routeName = $request->attributes->get('_route');
 
         $products = $this->repository->findAll();
@@ -72,11 +76,13 @@ class ProductController extends AbstractController
 
         return $this->render('product/index.html.twig', [
             'form' => $form->createView(),
-            'products' => $this->repository->findAll(),
+            // 'products' => $this->repository->findAll(),
+            'lastProducts' => $lastProducts,
+            'lessExpensiveProducts' => $lessExpensiveProducts,
             'cartProducts' => $cartProducts,
             'routeName' => $routeName,
             'routeParameters' => "cart",
-            'title' => "Dernier arrivage en stock",
+            'title' => "En ce moment dans notre boutique",
         ]);
     }
     // #[Route('/', name: 'post.index', methods: ['GET'])]
