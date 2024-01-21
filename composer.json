@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
+        "easycorp/easyadmin-bundle": "^4.8",
         "fakerphp/faker": "^1.23",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.25",
@@ -49,7 +50,8 @@
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.8",
         "twig/string-extra": "^3.8",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "vich/uploader-bundle": "^2.3"
     },
     "config": {
         "allow-plugins": {

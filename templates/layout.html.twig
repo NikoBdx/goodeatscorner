@@ -40,6 +40,9 @@
                 <strong><li class="nav-link">Bonjour {{ app.user.firstname  }}</li></strong>
                 <a class="nav-link" href="{{ path('app_order_user') }}">Mes commandes</a>
             {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="nav-link" href="{{ path('app_admin')}}"><i class="bi bi-person-lock"></i>Administration</a>
+            {% endif %}
             {% if not app.user %}
                 <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
             {% endif %}

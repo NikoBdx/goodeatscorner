@@ -59,6 +59,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->orders = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        $fullName = $this->getLastName() .' '. $this->getFirstName();
+        return $fullName;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

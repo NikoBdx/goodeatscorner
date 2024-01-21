@@ -76,7 +76,7 @@ class OrderController extends AbstractController
             $order->setDelivery($delivery);
             $order->setTotal($total);
             $order->setStatus("done");
-            $order->setNumber("CMD".date("Ymd").uniqid());
+            $order->setNumber(strtoupper("CMD".date("Ymd").uniqid()));
             $order->setUser($user);
 
             // création des détails de la commande

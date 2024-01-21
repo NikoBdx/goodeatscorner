@@ -10,7 +10,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
+
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
@@ -36,14 +40,22 @@ class Product
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type: 'string',length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
+    private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Family $family = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class)]
     private Collection $orderDetails;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function __construct()
     {
@@ -120,11 +132,26 @@ class Product
         return $this->image;
     }
 
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+
     public function setImage(?string $image): static
     {
         $this->image = $image;
 
         return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
     }
 
     public function getFamily(): ?Family

@@ -36,6 +36,17 @@ class OrderDetail
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
+    public function __toString()
+    {
+        $string =  strval(
+            'Produit :' . ' '. $this->product->getname(). ' /'. 'Quantité :' . ' ' .$this->quantity. ' / '.
+            'Prix unitaire :'. ' ' . number_format($this->unit_price, 2, ',', ' ').'€'. ' / '.
+            'Total :'. ' '.  number_format(($this->quantity*$this->unit_price), 2 , ',', ' ')
+        );
+        return $string;
+
+    }
+
     public function getId(): ?int
     {
         return $this->id;

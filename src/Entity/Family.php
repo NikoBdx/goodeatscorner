@@ -30,6 +30,11 @@ class Family
     #[ORM\OneToMany(mappedBy: 'family', targetEntity: Product::class)]
     private Collection $products;
 
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -52,17 +57,18 @@ class Family
         return $this;
     }
 
-    public function getShelfId(): ?Shelf
+    public function getShelf(): ?Shelf
     {
         return $this->shelf;
     }
 
-    public function setShelfId(?Shelf $shelf): static
+    public function setShelf(?Shelf $shelf): static
     {
         $this->shelf = $shelf;
 
         return $this;
     }
+
 
     /**
      * @return Collection<int, Product>

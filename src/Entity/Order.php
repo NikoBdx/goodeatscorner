@@ -41,10 +41,19 @@ class Order
     #[ORM\Column]
     private ?float $total = null;
 
-
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return strval($this->number);
+    }
+
+    public function getUpperNumber()
+    {
+        return strtoupper(strval($this->number));
     }
 
     public function getId(): ?int

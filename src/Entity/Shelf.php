@@ -6,10 +6,9 @@ use App\Repository\ShelfRepository;
 use App\Traits\TimestampTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[HasLifecycleCallbacks()]
 #[ORM\Entity(repositoryClass: ShelfRepository::class)]
@@ -27,6 +26,12 @@ class Shelf
 
     #[ORM\OneToMany(mappedBy: 'shelf', targetEntity: Family::class)]
     private Collection $families;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
 
     public function __construct()
     {
