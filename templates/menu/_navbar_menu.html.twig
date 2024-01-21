@@ -1,14 +1,14 @@
 {# Menu généré en fonction des rayons et des familles de produits #}
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid container-second-menu">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuSupportedContent" aria-controls="menuSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menuSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav d-flex my-3 menu-shelf-family">
                 {% for shelf in shelfs %}
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle {{loop.first ? "active" : "" }}" href="{{ path('app_product_shelf', {shelf : shelf.id}) }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="{{ path('app_product_shelf', {shelf : shelf.id}) }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ shelf.name }}
                     </a>
                     <ul class="dropdown-menu">
