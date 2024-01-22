@@ -172,6 +172,12 @@ footer {
     font-weight: 600;
 }
 
+.soldout {
+    font-size:1.2rem;
+    color: #ff0000;
+    font-style: italic;
+}
+
 /* style page commande  */
 
 th, td {
