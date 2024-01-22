@@ -10,9 +10,18 @@ header {
 .navbar-brand {
     font-size: 1.5rem !important;
 }
+
 .nav-link {
     font-size: 1.2rem !important;
 }
+
+.nav-link.admin {
+    font-size: 1.2rem !important;
+    background-color: red;
+    color: #fff;
+    border-radius:2px;
+}
+
 .container-second-menu {
     background-color: #7FAD39 !important;
     border-radius: 2px !important;
@@ -29,27 +38,168 @@ header {
         font-weight: 800;
     }
 }
+
 .nav-link.dropdown-item {
         color: #000;
 }
+
 .menu-title {
     border-width: 2px;
     border-style: solid;
     border-radius: 2px;
-    border-color: #000;
+    border-color: #7FAD39;
     padding: 3px 5px 3px 5px;
 }
+
 .menu-title:hover {
     background-color: #7FAD39 !important;
     color: #fff !important;
     border: none !important;
 }
+
 .nav-link:hover {
     text-decoration: underline;
 }
+
 .nav-link.hello:hover {
     text-decoration: none;
 }
-.devise {
+
+.logo {
+    background-color: #7FAD39;
+}
+
+/* style bannière des rayons familles  */
+
+.banner {
     font-size: 1.4rem;
+    background-image: url("images/supermarche.jpg") !important;
+    background-size: cover;
+}
+.banner-title {
+    background-color: #fff !important;
+    color: #7FAD39 !important;
+    font-size: 3rem;
+    font-weight: 600;
+    width: auto;
+    display:inline-block;
+    padding: 15px;
+    border-radius: 2px;
+}
+
+
+footer {
+    background-color: #7FAD39;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.social {
+    font-size: 1.6rem;
+    color: #0077B5;
+    background-color: #fff;
+    margin: 0 auto;
+    padding: 3px;
+}
+
+/* style page principale  */
+
+.products-container {
+    height: 100%;
+    margin-top: 180px;
+}
+.banner {
+    background-color:#7FAD39;
+}
+.devise {
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-style: italic;
+}
+.signature {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.sub-title {
+    background-color:#7FAD39;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.4rem;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+/* style product card  */
+
+.card {
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-radius: 2px !important;
+    border-color: #7FAD39 !important;
+}
+
+.product-img {
+    width: 250px;
+    height: 250px;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size:1.4rem !important;
+}
+
+.description {
+    font-size:1.2rem !important;
+    min-height: 55px;
+}
+
+.price {
+    font-size:1.2rem !important;
+    font-weight: 600;
+}
+
+.price-detail {
+    font-style: italic;
+    font-weight: 400;
+}
+
+.cart-action {
+    color: #000;
+}
+
+.cart-quantity {
+    font-size:1.2rem !important;
+    font-weight: 600;
+}
+
+/* style page commande  */
+
+th, td {
+    font-size:1.2rem !important;
+}
+
+.icon-details {
+    font-size: 1.2rem !important;
+    color: #000;
+}
+
+/* style page détailcommande  */
+
+.details-title {
+    font-size:2rem !important;
+    text-decoration: underline;
+}
+
+.cmd-number {
+    font-weight: 600;
+}
+
+/* style page recap panier  */
+
+.cart-link {
+    text-decoration: none;
+}
+
+.cart-action {
+    font-size: 1.6rem !important;
 }

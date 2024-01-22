@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-
+#[HasLifecycleCallbacks()]
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product

@@ -47,6 +47,9 @@ class FamilyCrudController extends AbstractCrudController
             ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
                 return $action->setLabel('Editer');
             })
+            ->update(Crud::PAGE_DETAIL, Action::EDIT, function (Action $action) {
+                return $action->setLabel('Sauvegarder');
+            })
             ->disable(Action::DELETE)
         ;
     }

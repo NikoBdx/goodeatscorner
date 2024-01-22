@@ -4,7 +4,7 @@
 <style>
     .cart-container {
         height: 100%;
-        margin-top: 100px;
+        margin-top: 180px;
         margin-bottom: 100px
     }
 </style>
@@ -13,7 +13,7 @@
 {% block body %}
 <div class="container cart-container">
     {% include 'bearcrumb.html.twig' with {'title': 'Panier'} %}
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-12">
             <table class="table">
                 <thead>
@@ -33,14 +33,14 @@
                             <td>{{ element.quantity }}</td>
                             <td>{{ (element.quantity * element.product.price) | format_currency('EUR', locale='fr') }}</td>
                             <td>
-                                <a href="{{ path('app_cart_add', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
-                                    <i class="bi bi-plus-square" style="font-size: 2rem;"></i>
+                                <a class="cart-link me-2" href="{{ path('app_cart_add', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
+                                    <i class="bi bi-plus-square cart-action"></i>
                                 </a>
-                                <a href="{{ path('app_cart_remove', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
-                                    <i class="bi bi-dash-square" style="font-size: 2rem;"></i>
+                                <a class="cart-link me-2" href="{{ path('app_cart_remove', {id: element.product.id, routeName: routeName, routeParameters: "cart" }) }}">
+                                    <i class="bi bi-dash-square cart-action"></i>
                                 </a>
-                                <a href="{{ path('app_cart_delete', {id: element.product.id}) }}">
-                                    <i class="bi bi-trash" style="font-size: 2rem;"></i>
+                                <a class="cart-link" href="{{ path('app_cart_delete', {id: element.product.id}) }}">
+                                    <i class="bi bi-trash cart-action"></i>
                                 </a>
                             </td>
                         </tr>
@@ -55,7 +55,7 @@
                         <td colspan="3">Total</td>
                         <td>{{ total | format_currency('EUR', locale='fr') }} </td>
                         <td>
-                            <a href="{{ path('app_cart_empty') }}" class="btn btn-danger">Vider</a>
+                            <a href="{{ path('app_cart_empty') }}" class="btn btn-danger">Vider le panier</a>
                         </td>
                     </tr>
                 </tfoot>

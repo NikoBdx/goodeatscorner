@@ -4,8 +4,8 @@
 <style>
     .user-order-container {
         height: 100%;
-        margin-top: 100px;
-        margin-bottom: 100px
+        margin-top: 180px;
+        margin-bottom: 100px;
     }
 </style>
 {% endblock %}
@@ -13,7 +13,7 @@
 {% block body %}
 <div class="container user-order-container">
     {% include 'bearcrumb.html.twig' with {'title': 'Mes Commandes'} %}
-    <div class="row">
+    <div class="row mt-5">
         <div class="col-12">
             <table class="table">
                 <thead>
@@ -33,8 +33,8 @@
                             <td>{{ order.total | format_currency('EUR', locale='fr') }}</td>
                             <td>{{ order.delivery ? "Livrée" : "Emportée"}}</td>
                             <td>
-                                <a href="{{ path('app_order_user_detail', {order : order.id, number: order.number}) }}" class="btn btn-info">
-                                    <i class="bi bi-eye"></i>
+                                <a href="{{ path('app_order_user_detail', {order : order.id, number: order.number}) }}" class="icon-details">
+                                    <i class="bi bi-card-list"></i>
                                 </a>
                             </td>
                         </tr>
