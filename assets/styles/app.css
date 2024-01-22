@@ -50,3 +50,6 @@ header {
 .nav-link.hello:hover {
     text-decoration: none;
 }
+.devise {
+    font-size: 1.4rem;
+}

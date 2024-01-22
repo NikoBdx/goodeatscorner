@@ -3,12 +3,37 @@
 <style>
     .products-container {
         height: 100%;
-        margin-top: 200px;
+        margin-top: 180px;
+    }
+    .banner {
+        background-color:#7FAD39;
+    }
+    .devise {
+        font-weight: 800;
+        font-style: italic;
+    }
+    .signature {
+        font-size: 1.2rem;
+        font-weight: 600;
     }
 </style>
 {% endblock %}
 {% block body %}
-
+{% if lastProducts is defined %}
+<div class="container products-container">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center">
+            <div class="banner">
+                <img src="{{ asset('uploads/banner.png') }}" class="img-fluid" alt="banner-goodeatscorner">
+            </div>
+            <div class="row mt-2">
+                <p class="d-flex justify-content-center devise">"Bienvenue chez Good Eats Corner, vous trouverez chez nous l'essentiel dont vous avez besoin au meilleur prix!"</p>
+                <p class="d-flex justify-content-end signature">Nicolas, votre commerçant.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% if products is defined %}
 <div class="container products-container">
     {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
@@ -21,7 +46,7 @@
 </div>
 {% endif %}
 {% if lastProducts is defined %}
-<div class="container products-container">
+<div class="container">
     {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
     <h3 class="mt-5">Derniers produits arrivés en stock !</h3>
     <div class="row justify-content-between">
