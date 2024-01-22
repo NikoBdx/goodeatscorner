@@ -10,31 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <style>
-        .navbar-brand {
-            font-size: 1.5rem;
-        }
-        .nav-link {
-            font-size: 1.2rem;
-        }
-        .container-second-menu {
-            background-color: #7FAD39;
-            border-radius: 2px;
-        }
-        .menu-shelf-family {
-            width: 100%;
-            justify-content: space-around;
-            background-color: #7FAD39;
-            align-items: center;
-            a {
-                color: #fff;
-                border-radius: 2px;
-                font-size:1.4rem;
-                font-weight: 800;
-            }
-        }
-        .nav-link.dropdown-item {
-             color: #000;
-        }
+
     </style>
     {% block styles %}
     {% endblock %}
@@ -46,7 +22,7 @@
 <header class="container fixed-top">
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">Good Eats Corner</a>
+            <strong><a class="navbar-brand menu-title" href="/">Good Eats Corner</a></strong>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,7 +32,7 @@
                 </ul>
                 <ul class="navbar-nav ms-auto d-flex flex-row mt-3 mt-lg-0">
                     {% if app.user %}
-                    <strong><li class="nav-link">Bonjour {{ app.user.firstname  }}</li></strong>
+                    <strong><li class="nav-link hello">Bonjour {{ app.user.firstname  }}</li></strong>
                     <a class="nav-link" href="{{ path('app_order_user') }}">Mes commandes</a>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}

@@ -3,5 +3,50 @@ body {
 }
 
 header {
-    background-color: #fff;
+    background-color: #fff !important;
+}
+
+/* style des menus  */
+.navbar-brand {
+    font-size: 1.5rem !important;
+}
+.nav-link {
+    font-size: 1.2rem !important;
+}
+.container-second-menu {
+    background-color: #7FAD39 !important;
+    border-radius: 2px !important;
+}
+.menu-shelf-family {
+    width: 100%;
+    justify-content: space-around;
+    background-color: #7FAD39;
+    align-items: center;
+    a {
+        color: #fff;
+        border-radius: 2px;
+        font-size:1.4rem !important;
+        font-weight: 800;
+    }
+}
+.nav-link.dropdown-item {
+        color: #000;
+}
+.menu-title {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 2px;
+    border-color: #000;
+    padding: 3px 5px 3px 5px;
+}
+.menu-title:hover {
+    background-color: #7FAD39 !important;
+    color: #fff !important;
+    border: none !important;
+}
+.nav-link:hover {
+    text-decoration: underline;
+}
+.nav-link.hello:hover {
+    text-decoration: none;
 }
