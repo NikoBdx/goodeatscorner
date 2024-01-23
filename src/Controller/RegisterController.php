@@ -33,9 +33,10 @@ class RegisterController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $html = "<p>Bonjour {$user->getFirstname()} nous vous remercions de votre inscription sur Good Eats Corner!</p>";
+            $html = "<p>Bonjour {$user->getFirstname()} nous vous remercions de votre inscription sur Good Eats Corner!</p>
+            <p>Le Service Cleint, Good Eats Corner</p>";
 
-            $mailservice->send("goodeatscorner@gmail.com", $user->getEmail(), "Inscription",  $html, "Bienvenue sur Good Eats Corner");
+            $mailservice->send("goodeatscorner@gmail.com", $user->getEmail(), "Inscription Good eats Corner",  $html, "Bienvenue sur Good Eats Corner");
 
             return $userAuthenticator->authenticateUser(
                 $user,

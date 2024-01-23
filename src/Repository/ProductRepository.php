@@ -22,30 +22,9 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
-//    /**
-//     * @return Product[] Returns an array of Product objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Product
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * retourne tous les produits d'une famille
+     */
 
    public function findProductsByFamily($value)
    {
@@ -56,6 +35,10 @@ class ProductRepository extends ServiceEntityRepository
            ->getArrayResult()
        ;
    }
+
+   /**
+    * retourne tous les produits d'un rayon
+    */
 
    public function findProductsByShelf($value)
    {
@@ -70,6 +53,9 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
+   /**
+    * recherche de produit par le nom (utilisé pour la barre de recherche)
+    */
    public function findProductsByNameSearch(SearchData $searchData)
     {
         $data = $this->createQueryBuilder('p')
@@ -88,16 +74,22 @@ class ProductRepository extends ServiceEntityRepository
         return $data;
     }
 
+    /**
+     * retourne un nombre voulu des derniers produits créés par date
+     */
     public function findLastProducts($number)
     {
         return $this->createQueryBuilder('p')
-            ->addOrderBy('p.updatedAt', 'DESC')
+            ->addOrderBy('p.createdAt', 'DESC')
             ->setMaxResults($number)
             ->getQuery()
             ->getResult()
         ;
     }
 
+    /**
+     * retourne un nombre voulu des produits les moins chers
+     */
     public function findLessExpensiveProducts($number)
     {
         return $this->createQueryBuilder('p')

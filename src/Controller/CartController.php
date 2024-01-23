@@ -61,18 +61,6 @@ class CartController extends AbstractController
     #[Route('/add/{id}/{routeName}/{routeParameters}', name: 'app_cart_add')]
     public function add(Product $product, SessionInterface $session, $routeName, $routeParameters )
     {
-        $id = $product->getId();
-
-        $cart = $session->get('cart', []);
-
-        if(empty($cart[$id])){
-            $cart[$id] = 1;
-        }else{
-            $cart[$id]++;
-        }
-
-        $session->set('cart', $cart);
-
         if ($routeParameters === "cart") {
             $params = [];
         } else {
@@ -80,6 +68,28 @@ class CartController extends AbstractController
             $params = [$elements[0] => $elements[1]];
         }
 
+        $id = $product->getId();
+
+        $stockProduct = $product->getStock();
+
+        $cart = $session->get('cart', []);
+
+        if(empty($cart[$id])){
+            $cart[$id] = 1;
+        }else{
+            if($cart[$id]) {
+                //si l'ajout au panier rend le stock négatif (impossible)
+                if($stockProduct - $cart[$id] === 0 ) {
+                    $this->addFlash('error', 'Pas assez de stock pour ajouter ce produit.');
+                    return $this->redirectToRoute($routeName, $params);
+                }
+                $cart[$id]++;
+            }
+        }
+
+        $session->set('cart', $cart);
+
+        $this->addFlash('success', 'Le produit a bien été ajouté au panier.');
         return $this->redirectToRoute($routeName, $params);
 
     }
@@ -101,7 +111,6 @@ class CartController extends AbstractController
 
         $session->set('cart', $cart);
 
-
         if ($routeParameters === "cart") {
             $params = [];
         } else {
@@ -109,6 +118,7 @@ class CartController extends AbstractController
             $params = [$elements[0] => $elements[1]];
         }
 
+        $this->addFlash('success', 'Le produit a bien été retiré du panier.');
         return $this->redirectToRoute($routeName, $params);
     }
 

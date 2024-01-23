@@ -1,5 +1,11 @@
+@font-face
+{
+    font-family: "poppins";
+    src: url('../fonts/Poppins-Regular.ttf');
+}
+
 body {
-    font-family: 'Poppins', sans serif !important;
+    font-family: 'poppins', sans serif !important;
 }
 
 header {
@@ -8,17 +14,25 @@ header {
 
 /* style des menus  */
 .navbar-brand {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important;
 }
 
+
 .nav-link {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
 }
 
 .nav-link.admin {
-    font-size: 1.2rem !important;
+    font-size: 1rem !important;
     background-color: red;
     color: #fff;
+    border-radius:2px;
+}
+
+.nav-link.admin:hover {
+    font-size: 1rem !important;
+    background-color: #fff;
+    color: red;
     border-radius:2px;
 }
 
@@ -34,7 +48,7 @@ header {
     a {
         color: #fff;
         border-radius: 2px;
-        font-size:1.4rem !important;
+        font-size:1.2rem !important;
         font-weight: 800;
     }
 }
@@ -48,7 +62,7 @@ header {
     border-style: solid;
     border-radius: 2px;
     border-color: #7FAD39;
-    padding: 3px 5px 3px 5px;
+    padding: 5px 10px;
 }
 
 .menu-title:hover {
@@ -76,6 +90,7 @@ header {
     background-image: url("images/supermarche.jpg") !important;
     background-size: cover;
 }
+
 .banner-title {
     background-color: #fff !important;
     color: #7FAD39 !important;
@@ -87,13 +102,13 @@ header {
     border-radius: 2px;
 }
 
-
 footer {
     background-color: #7FAD39;
     color: #fff;
     font-weight: 600;
     font-size: 1.2rem;
 }
+
 .social {
     font-size: 1.6rem;
     color: #0077B5;
@@ -108,18 +123,22 @@ footer {
     height: 100%;
     margin-top: 180px;
 }
+
 .banner {
     background-color:#7FAD39;
 }
+
 .devise {
     font-size: 1.6rem;
     font-weight: 800;
     font-style: italic;
 }
+
 .signature {
     font-size: 1.2rem;
     font-weight: 600;
 }
+
 .sub-title {
     background-color:#7FAD39;
     color: #fff;
@@ -127,6 +146,11 @@ footer {
     font-size: 1.4rem;
     padding: 5px 10px;
     border-radius: 2px;
+}
+
+.no-product {
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 /* style product card  */

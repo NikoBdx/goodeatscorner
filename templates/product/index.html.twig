@@ -19,6 +19,16 @@
 <div class="container products-container">
     {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
     {% include 'bearcrumb.html.twig' with {'title': title ? title : "Votre recherche" } %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success auto-close mt-2">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger auto-close mt-2">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="row justify-content-between mt-5">
         {% for product in products %}
             {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}
@@ -26,9 +36,28 @@
     </div>
 </div>
 {% endif %}
+{% if products is defined and products | length == 0 %}
+<div class="container">
+    <div class="row">
+        <div class="text-center col-12 my-5">
+            <div class="no-product">Aucun produit n'est actuellement disponible</div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% if lastProducts is defined %}
 <div class="container">
     {% include "product/_search_product.html.twig" with { form: form ?? null } only %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success auto-close">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger auto-close">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="sub-title mt-5 mb-3">Derniers produits arrivés en stock</div>
     <div class="row justify-content-between">
         {% for product in lastProducts %}
@@ -39,6 +68,16 @@
 {% endif %}
 {% if lessExpensiveProducts is defined %}
 <div class="container my-5">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success auto-close">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger auto-close">
+            {{ message }}
+        </div>
+    {% endfor %}
     <div class="sub-title mt-5 mb-3">Nos premiers prix</div>
     <div class="row justify-content-between">
         {% for product in lessExpensiveProducts %}
@@ -47,4 +86,44 @@
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+
+{% block js %}
+<script>
+
+    // permet de supprimer le message flash après 5 secondes
+    const autoCloseElements = document.querySelectorAll(".auto-close");
+
+    function fadeAndSlide(element) {
+    const fadeDuration = 500;
+    const slideDuration = 500;
+
+    let opacity = 1;
+    const fadeInterval = setInterval(function () {
+        if (opacity > 0) {
+        opacity -= 0.1;
+        element.style.opacity = opacity;
+        } else {
+        clearInterval(fadeInterval);
+        let height = element.offsetHeight;
+        const slideInterval = setInterval(function () {
+            if (height > 0) {
+            height -= 10;
+            element.style.height = height + "px";
+            } else {
+            clearInterval(slideInterval);
+            element.parentNode.removeChild(element);
+            }
+        }, slideDuration / 10);
+        }
+    }, fadeDuration / 10);
+    }
+
+    setTimeout(function () {
+    autoCloseElements.forEach(function (element) {
+        fadeAndSlide(element);
+    });
+    }, 5000);
+</script>
 {% endblock %}

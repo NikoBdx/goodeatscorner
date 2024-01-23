@@ -111,8 +111,8 @@ class OrderController extends AbstractController
 
             $html = "<p>Bonjour, </p><p> $customerFirstname  $customerLastname  nous vous remercions pour votre commande</p>
             <p>Commande n°:  $customerorderNumber , d'un montant de $customerordertotal euros.</p>
-            ";
-            $mailservice->send("goodeatscorner@gmail.com", $customerEmail, "Commande",  $html, "Commande Good Eats Corner");
+            <p>Le Service Vente, Good Eats Corner</p>";
+            $mailservice->send("goodeatscorner@gmail.com", $customerEmail, "Commande Good Eats Corner",  $html, "Commande Good Eats Corner");
 
             /**
              * on vide la panier

@@ -85,57 +85,6 @@ class ProductController extends AbstractController
             'title' => "En ce moment dans notre boutique",
         ]);
     }
-    // #[Route('/', name: 'post.index', methods: ['GET'])]
-    // public function index(
-    //     PostRepository $postRepository,
-    //     Request $request
-    // ): Response {
-    //     $searchData = new SearchData();
-    //     $form = $this->createForm(SearchType::class, $searchData);
-
-    //     $form->handleRequest($request);
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $searchData->page = $request->query->getInt('page', 1);
-    //         $posts = $postRepository->findBySearch($searchData);
-
-    //         return $this->render('pages/post/index.html.twig', [
-    //             'form' => $form->createView(),
-    //             'posts' => $posts
-    //         ]);
-    //     }
-
-    //     return $this->render('pages/post/index.html.twig', [
-    //         'form' => $form->createView(),
-    //         'posts' => $postRepository->findPublished($request->query->getInt('page', 1))
-    //     ]);
-    // }
-
-
-    // #[Route('/product', name: 'app_product')]
-    // public function index(SessionInterface $session): Response
-    // {
-    //     $products = $this->repository->findAll();
-
-    //     $cart = $session->get('cart', []);
-
-    //     $cartProducts = [];
-    //     $total = 0;
-
-    //     foreach($cart as $id => $quantity) {
-    //         $product = $this->repository->find($id);
-    //         $cartProducts[] = [
-    //             'product' => $product,
-    //             'quantity' => $quantity
-    //         ];
-    //         $total += $product->getPrice() * $quantity;
-    //     }
-
-    //     return $this->render('product/index.html.twig', [
-    //         'products' => $products,
-    //         'cartProducts' => $cartProducts,
-    //     ]);
-    // }
-
 
     #[Route('/product/family/{family}', name: 'app_product_family')]
     public function getProductsByFamily(
