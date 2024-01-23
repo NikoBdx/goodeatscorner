@@ -55,6 +55,7 @@ class ProductRepository extends ServiceEntityRepository
 
 /**
  *
+ *
  */
    public function findProductsByNameSearch(SearchData $searchData)
     {
@@ -76,6 +77,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findLastProducts($number)
     {
         return $this->createQueryBuilder('p')
+            ->andWhere('p.stock > 0')
             ->addOrderBy('p.createdAt', 'DESC')
             ->setMaxResults($number)
             ->getQuery()
@@ -89,6 +91,7 @@ class ProductRepository extends ServiceEntityRepository
     public function findLessExpensiveProducts($number)
     {
         return $this->createQueryBuilder('p')
+            ->andWhere('p.stock > 0')
             ->addOrderBy('p.price', 'ASC')
             ->setMaxResults($number)
             ->getQuery()
