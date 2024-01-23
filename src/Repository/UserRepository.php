@@ -38,4 +38,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * statistiques users pour le tableau de bord
+     */
+    public function usersStats()
+    {
+        $qb = $this->createQueryBuilder('u')
+            ->select('COUNT(u.id) as countAllUsers' ,
+            'SUM(case when u.roles like :admin then 1 else 0 end) AS countAdmin',
+            'SUM(case when u.roles like :user then 1 else 0 end) AS countUser')
+            ->setParameter('admin', '%ROLE_ADMIN%')
+            ->setParameter('user', '%ROLE_USER%')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        return $qb;
+    }
+
 }

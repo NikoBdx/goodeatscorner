@@ -23,7 +23,6 @@ class OrderRepository extends ServiceEntityRepository
 
     /**
      * retourne toutes les commandes d'un utilisateur
-
      */
     public function findOrdersByUser($user)
     {
@@ -33,6 +32,20 @@ class OrderRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
         ;
+    }
+
+    /**
+     * statistiques des commandes pour le tableau de bord
+     */
+    public function ordersStats()
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->select('COUNT(o.id) as countOrders' ,
+            'SUM(o.total) AS sumTotalOrders')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        return $qb;
     }
 
 }

@@ -1,0 +1,58 @@
+
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Statistiques{% endblock %}
+{% block page_actions %}
+    <a class="btn btn-primary" href="...">Some Action</a>
+{% endblock %}
+
+{% block main %}
+    <div classs="col-6 mt-5">
+        <h4>Utilisateurs</h4>
+        <table class="table table-striped" style="width:50%">
+            <tbody>
+                <tr>
+                    <th style="width:50%">Nombre d'utilsateurs </th>
+                    <td>{{ usersStats.countAllUsers }}</td>
+                </tr>
+                <tr>
+                    <th>dont ADMIN </th>
+                    <td>{{ usersStats.countAdmin }}</td>
+                </tr>
+                <tr>
+                    <th>dont clients</th>
+                    <td>{{ usersStats.countUser }}</td>
+                </tr>
+        </table>
+    </div>
+
+    <div classs="col-6">
+        <h4>Ventes</h4>
+        <table class="table table-striped" style="width:50%">
+            <tbody>
+                <tr>
+                    <th style="width:50%">Nombre de commandes</th>
+                    <td>{{ ordersStats.countOrders }}</td>
+                </tr>
+                <tr>
+                    <th style="width:50%">Total CA commandes</th>
+                    <td>{{ ordersStats.sumTotalOrders | format_currency('EUR', locale='fr')}}</td>
+                </tr>
+        </table>
+    </div>
+
+     <div classs="col-6">
+        <h4>Stock</h4>
+        <table class="table table-striped" style="width:50%">
+            <tbody>
+                <tr>
+                    <th style="width:50%">Nombre de produits</th>
+                    <td>{{ productsStats.stockProducts }}</td>
+                </tr>
+                <tr>
+                    <th style="width:50%">Valorisation du stock</th>
+                    <td>{{ productsStats.stockValue | format_currency('EUR', locale='fr')}}</td>
+                </tr>
+        </table>
+    </div>
+{% endblock %}
