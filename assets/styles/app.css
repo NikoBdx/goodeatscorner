@@ -160,11 +160,13 @@ footer {
     border-style: solid !important;
     border-radius: 2px !important;
     border-color: #7FAD39 !important;
+    background-color: #fbfef7 !important;
 }
 
 .product-img {
     width: 250px;
     height: 250px;
+    margin: auto;
 }
 
 .card-title {

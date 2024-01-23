@@ -53,25 +53,21 @@ class ProductRepository extends ServiceEntityRepository
        ;
    }
 
-   /**
-    * recherche de produit par le nom (utilisé pour la barre de recherche)
-    */
+/**
+ *
+ */
    public function findProductsByNameSearch(SearchData $searchData)
     {
-        $data = $this->createQueryBuilder('p')
+        $qb = $this->createQueryBuilder('p')
             ->addOrderBy('p.createdAt', 'DESC');
 
         if (!empty($searchData->q)) {
-            $data = $data
-                ->andWhere('p.name LIKE :q')
+            $qb ->andWhere('p.name LIKE :q')
                 ->setParameter('q', "%{$searchData->q}%");
         }
 
-        $data = $data
-            ->getQuery()
-            ->getResult();
-
-        return $data;
+        return $qb->getQuery()
+                ->getResult();
     }
 
     /**
