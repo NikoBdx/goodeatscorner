@@ -37,6 +37,4 @@ class BusinessStatsController extends AbstractController
             'productsStats' => $productsStats
         ]);
     }
-
-
 }
