@@ -37,8 +37,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Familles', 'fa fa-archive', Family::class);
         yield MenuItem::linkToCrud('Commandes', 'fa fa-file-text-o', Order::class);
         yield MenuItem::linktoRoute('Statistiques', 'fa fa-chart-bar', 'admin_business_stats');
-        // yield MenuItem::linkToCrud('Détails des commandes', 'fa fa-file-text-o', OrderDetail::class);
-
-
     }
 }

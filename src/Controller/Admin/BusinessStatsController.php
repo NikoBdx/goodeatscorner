@@ -10,7 +10,6 @@ use App\Repository\ProductRepository;
 
 
 
-
 class BusinessStatsController extends AbstractController
 {
     #[Route('/admin_business_stats' , name:'admin_business_stats')]
