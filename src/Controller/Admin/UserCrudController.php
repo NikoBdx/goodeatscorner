@@ -9,6 +9,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextAreaField;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+
 
 class UserCrudController extends AbstractCrudController
 {
@@ -21,7 +24,7 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Utilsateur')
+            ->setEntityLabelInSingular('Utilisateur')
             ->setEntityLabelInPlural('Utilisateurs')
             ->setDateIntervalFormat('%%y Year(s) %%m Month(s) %%d Day(s)')
 
@@ -36,7 +39,8 @@ class UserCrudController extends AbstractCrudController
             TextField::new('lastname','Nom'),
             TextField::new('firstname','Prénom'),
             TextField::new('email','Email'),
-            ArrayField::new('fullRole','Rôle')->onlyOnIndex(),
+            ArrayField::new('roles','Rôle'),
+            // TextAreaField::new('fullRole','Rôle')->onlyOnDetail()->renderAsHtml(),
             TextField::new('address','Adresse'),
             TextField::new('postalCode','Code postal'),
             TextField::new('city','Ville'),

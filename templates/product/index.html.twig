@@ -59,7 +59,7 @@
         </div>
     {% endfor %}
     <div class="sub-title mt-5 mb-3">Derniers produits arrivés en stock</div>
-    <div class="row justify-content-between">
+    <div class="row justify-content-center">
         {% for product in lastProducts %}
             {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}
         {% endfor %}
@@ -79,7 +79,7 @@
         </div>
     {% endfor %}
     <div class="sub-title mt-5 mb-3">Nos premiers prix</div>
-    <div class="row justify-content-between">
+    <div class="row justify-content-center">
         {% for product in lessExpensiveProducts %}
             {% include 'product-card.html.twig' with {'product': product, 'cartProducts': cartProducts } %}
         {% endfor %}
@@ -124,7 +124,7 @@
     autoCloseElements.forEach(function (element) {
         fadeAndSlide(element);
     });
-    }, 5000);
+    }, 4000);
 
     // tooltip description des produits
     $(function () {

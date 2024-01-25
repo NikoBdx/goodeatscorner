@@ -173,6 +173,7 @@ footer {
 .card-title {
     font-weight: 600;
     font-size:1.2rem !important;
+    min-height: 50px !important;
 }
 
 .description {

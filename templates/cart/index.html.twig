@@ -15,6 +15,16 @@
     {% include 'bearcrumb.html.twig' with {'title': 'Panier'} %}
     <div class="row mt-5">
         <div class="col-12">
+            {% for message in app.flashes('success') %}
+            <div class="alert alert-success auto-close">
+                {{ message }}
+            </div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger auto-close">
+                    {{ message }}
+                </div>
+            {% endfor %}
             <table class="table">
                 <thead>
                     <tr>
@@ -68,10 +78,51 @@
             {% if not app.user %}
             <div class="alert alert-warning text-center" role="alert">
                 Vous devez être connecté pour valider votre panier !
+                <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
             </div>
             {% endif %}
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block js %}
+<script>
+
+    // permet de supprimer le message flash après 5 secondes
+    const autoCloseElements = document.querySelectorAll(".auto-close");
+
+    function fadeAndSlide(element) {
+    const fadeDuration = 500;
+    const slideDuration = 500;
+
+    let opacity = 1;
+    const fadeInterval = setInterval(function () {
+        if (opacity > 0) {
+        opacity -= 0.1;
+        element.style.opacity = opacity;
+        } else {
+        clearInterval(fadeInterval);
+        let height = element.offsetHeight;
+        const slideInterval = setInterval(function () {
+            if (height > 0) {
+            height -= 10;
+            element.style.height = height + "px";
+            } else {
+            clearInterval(slideInterval);
+            element.parentNode.removeChild(element);
+            }
+        }, slideDuration / 10);
+        }
+    }, fadeDuration / 10);
+    }
+
+    setTimeout(function () {
+    autoCloseElements.forEach(function (element) {
+        fadeAndSlide(element);
+    });
+    }, 4000);
+
+</script>
 {% endblock %}
